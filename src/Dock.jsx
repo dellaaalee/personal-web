@@ -12,7 +12,7 @@ const items = [
   { id: "about",      label: "About me",   icon: about,    type: "notes"    },
   { id: "experience", label: "Experience", icon: exp,      type: "notes"    },
   { id: "projects",   label: "Projects",   icon: projects, type: "folder"   },
-  { id: "linkedin",   label: "LinkedIn",   icon: linkedin, type: "linkedin" },
+  { id: "linkedin",   label: "LinkedIn",   icon: linkedin, type: "linkedin", url: "https://www.linkedin.com/in/della-lee/"},
   { id: "email",      label: "Email",      icon: gmail,    type: "gmail"    },
   { id: "community",  label: "Community",  icon: music,    type: "folder"   },
   { id: "music",      label: "Music",      icon: music,    type: "music"    },
@@ -23,6 +23,10 @@ export default function Dock({ onOpen, openIds }) {
 
   const handleClick = (e, item) => {
     e.preventDefault();
+    if (item.url) {
+      window.open(item.url, "_blank");
+      return;
+    }
     setActiveId(item.id);
     if (onOpen) onOpen(item.id);
   };
