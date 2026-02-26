@@ -5,7 +5,7 @@ import about from "./assets/icons/notes.png";
 import exp from "./assets/icons/notes.png";
 import projects from "./assets/icons/notes.png";
 import linkedin from "./assets/icons/linkedin.png";
-import gmail from "./assets/icons/notes.png";
+import gmail from "./assets/icons/gmail.png";
 import music from "./assets/icons/notes.png";
 
 const items = [
@@ -53,6 +53,9 @@ export default function Dock({ onOpen, openIds }) {
               <div className={iconCls} aria-hidden="true">
                 {item.type === "notes" && (
                   <span className="notes-lines" aria-hidden="true" />
+                )}
+                {item.icon && item.type !== "notes" && (
+                  <img src={item.icon} alt="" className="dock-icon-img" />
                 )}
               </div>
               <span className="dock-tooltip">{item.label}</span>
