@@ -54,7 +54,7 @@ export default function Dock({ onOpen, openIds }) {
                 {item.type === "notes" && (
                   <span className="notes-lines" aria-hidden="true" />
                 )}
-                {item.icon && item.type !== "notes" && (
+                {(item.type === "gmail" || item.type === "linkedin") && (
                   <img src={item.icon} alt="" className="dock-icon-img" />
                 )}
               </div>

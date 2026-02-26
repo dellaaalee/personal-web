@@ -24,7 +24,7 @@
   left: 50%;
   bottom: 30px;
   transform: translateX(-50%);
-  z-index: 9999;  /* ← add this */
+  z-index: 9999;
 }
 
 /* each icon slot */
@@ -94,8 +94,8 @@
 .dock-icon.notes::after {
   content: "";
   position: absolute;
-  left: 0;      /* ← was 0cap */
-  right: 0;     /* ← was 1px */
+  left: 0;      
+  right: 0;    
   top: 13px;
   height: 0.3px;
   background: repeating-linear-gradient(
@@ -109,15 +109,53 @@
 /* two gray content lines (stroke) */
 .dock-icon.notes .notes-lines {
   position: absolute;
-  left: 0;        /* ← was 6px */
-  right: 0;       /* ← was 6px */
+  left: 0;       
+  right: 0;      
   top: 23px;
   height: 1.2px;
   background: #CFC8C8;
-  border-radius: 0;   /* ← remove pill rounding so edges are flush */
+  border-radius: 0;  
 
   box-shadow: 0 8px 0 rgba(207,200,200,0.95);
 }
+
+.dock-icon.folder {
+  position: relative;
+  width: 41px;
+  height: 30px;
+  border-radius: 3px;
+  background: #99E6FF;
+  box-sizing: border-box;
+  align-self: flex-end;
+}
+
+.dock-icon.folder::before {
+  display: none;
+}
+
+.dock-icon.folder::after {
+  display: none;
+}
+
+/* music icon */
+.dock-icon.music {
+  position: relative;
+  width: 41px;
+  height: 41px;
+  border-radius: 9px;
+  background: #FC3E5C;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* make sure music has no after pseudo */
+.dock-icon.music::after {
+  display: none;
+}
+
+
 
 .dock-icon.gmail {
   position: relative;
