@@ -1,33 +1,25 @@
-/* wrapper that positions dock */
 .dock-wrapper {
   position: fixed;
   left: 50%;
-  bottom: 18px;
+  bottom: 30px;
   transform: translateX(-50%);
 }
 
-/* Dock container = Figma tray (Rectangle 11) */
+/* tray */
 .dock {
-  position: fixed;
-  left: 50%;
-  bottom: 5px;
-  transform: translateX(-50%);
-
-  width: auto;
   height: 77px;
-
   background: #fdfdfd;
   border-radius: 24px;
-  box-shadow: 0 4px 14px rgba(22,21,21,0.25);
+  box-shadow: 0 4px 14px rgba(22, 21, 21, 0.25);
 
   display: flex;
   align-items: center;
 
-  gap: 14px;
+  gap: 12px;
   padding: 0 22px;
 }
 
-/* icon slot */
+/* each icon slot */
 .dock-item {
   width: 41px;
   height: 41px;
@@ -36,26 +28,33 @@
   place-items: center;
 
   position: relative;
+
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+
+  transform: translateY(-4px);
   transition: transform 120ms ease;
-  will-change: transform;
+  
 }
 
 .dock-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-8px);
 }
 
-/* icon image (NOT emoji) */
+/* PNG icon */
 .dock-icon {
   width: 41px;
   height: 41px;
-  object-fit: contain;
+  display: block;
+  border-radius: 9px;
+
+  /* icon shadow from figma */
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.14);
 
   user-select: none;
   -webkit-user-drag: none;
-
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.14);
-
-  border-radius: 9px;
 }
 
 /* tooltip bubble */
@@ -63,7 +62,6 @@
   position: absolute;
   left: 50%;
   bottom: calc(100% + 14px);
-
   transform: translateX(-50%) translateY(6px);
   opacity: 0;
   pointer-events: none;
@@ -82,14 +80,12 @@
   transition: opacity 120ms ease, transform 120ms ease;
 }
 
-/* tooltip triangle */
 .dock-tooltip::after {
   content: "";
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-
   width: 0;
   height: 0;
 
@@ -98,9 +94,26 @@
   border-top: 10px solid rgba(110, 110, 115, 0.95);
 }
 
-/* show tooltip */
 .dock-item:hover .dock-tooltip,
 .dock-item:focus-visible .dock-tooltip {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* dock dot */
+.dock-dot {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px); 
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #525151;
+  opacity: 0;
+}
+
+/* show dot when active */
+.dock-item.is-active .dock-dot {
+  opacity: 1;
 }

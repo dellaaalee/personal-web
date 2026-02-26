@@ -1,4 +1,5 @@
 import "./Dock.css";
+import { useEffect, useState } from "react";
 
 import about from "./assets/icons/notes.png";
 import exp from "./assets/icons/notes.png";
@@ -18,13 +19,33 @@ const items = [
 ];
 
 export default function Dock() {
+  const [activeId, setActiveId] = useState("about"); // default
+
+  useEffect(() => {
+    const updateFromHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      setActiveId(hash || "about");
+    };
+
+    updateFromHash(); // ✅ runs on initial page load
+    window.addEventListener("hashchange", updateFromHash);
+
+    return () => window.removeEventListener("hashchange", updateFromHash);
+  }, []);
+
   return (
     <div className="dock-wrapper">
       <nav className="dock" aria-label="Dock navigation">
         {items.map((item) => (
-          <a className="dock-item" key={item.id} href={item.href} aria-label={item.label}>
+          <a
+            key={item.id}
+            className={`dock-item ${activeId === item.id ? "is-active" : ""}`}
+            href={item.href}
+            aria-label={item.label}
+          >
             <img src={item.icon} className="dock-icon" alt="" />
             <span className="dock-tooltip">{item.label}</span>
+            <span className="dock-dot" aria-hidden="true" />
           </a>
         ))}
       </nav>
