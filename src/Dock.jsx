@@ -13,7 +13,7 @@ const items = [
   { id: "experience", label: "Experience", icon: exp,      type: "notes"    },
   { id: "projects",   label: "Projects",   icon: projects, type: "folder"   },
   { id: "linkedin",   label: "LinkedIn",   icon: linkedin, type: "linkedin", url: "https://www.linkedin.com/in/della-lee/"},
-  { id: "email",      label: "Email",      icon: gmail,    type: "gmail"    },
+  { id: "email",      label: "Email",      icon: gmail,    type: "gmail", url: "mailto:della.lee@berkeley.edu"    },
   { id: "community",  label: "Community",  icon: music,    type: "folder"   },
   { id: "music",      label: "Music",      icon: music,    type: "music"    },
 ];
