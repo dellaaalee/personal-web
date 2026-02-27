@@ -4,8 +4,11 @@
   color: #1a1a1a;
   max-width: 680px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-
 /* Header */
 .about-header {
   display: flex;
@@ -47,11 +50,10 @@
 }
 
 /* Bio */
-.about-bio {
-  margin-bottom: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.about-bio,
+.about-section {
+  width: 100%;
+  text-align: left;
 }
 
 .about-bio p {
@@ -68,6 +70,9 @@
 /* Sections */
 .about-section {
   margin-bottom: 28px;
+  width: 100%;
+  text-align: left;
+  padding-top: 20px;
 }
 
 .about-section-title {

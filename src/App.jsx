@@ -2,11 +2,12 @@ import { useState, useCallback } from "react";
 import Dock from "./Dock";
 import Window from "./Window";
 import About from "./apps/About";
+import Experience from "./apps/Experience";
 import "./App.css";
 
 const WINDOW_CONTENT = {
   about:      { title: "About Me",   component: About },
-  experience: { title: "Experience", component: null },
+  experience: { title: "Experience", component: Experience },
   projects:   { title: "Projects",   component: null },
   community:  { title: "Community",  component: null },
   music:      { title: "Music",      component: null },
