@@ -1,16 +1,15 @@
 import { useState, useCallback } from "react";
 import Dock from "./Dock";
 import Window from "./Window";
+import About from "./apps/About";
 import "./App.css";
 
 const WINDOW_CONTENT = {
-  about:      { title: "About Me",   content: "About me content goes here." },
-  experience: { title: "Experience", content: "Experience content goes here." },
-  projects:   { title: "Projects",   content: "Projects content goes here." },
-  linkedin:   { title: "LinkedIn",   content: "LinkedIn content goes here." },
-  email:      { title: "Email",      content: "Email content goes here." },
-  community:  { title: "Community",  content: "Community content goes here." },
-  music:      { title: "Music",      content: "Music content goes here." },
+  about:      { title: "About Me",   component: About },
+  experience: { title: "Experience", component: null },
+  projects:   { title: "Projects",   component: null },
+  community:  { title: "Community",  component: null },
+  music:      { title: "Music",      component: null },
 };
 
 let zCounter = 100;
@@ -44,6 +43,7 @@ export default function App() {
       {windows.map((w) => {
         const config = WINDOW_CONTENT[w.id];
         if (!config) return null;
+        const Content = config.component;
         return (
           <Window
             key={w.id}
@@ -54,7 +54,7 @@ export default function App() {
             onClose={closeWindow}
             onFocus={focusWindow}
           >
-            <p>{config.content}</p>
+            {Content ? <Content /> : <p style={{ padding: 20, color: "#999" }}>Coming soon.</p>}
           </Window>
         );
       })}

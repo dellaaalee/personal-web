@@ -2,10 +2,7 @@
   position: fixed;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow:
-    0 0 0 0.5px rgba(0,0,0,0.12),
-    0 8px 32px rgba(0,0,0,0.18),
-    0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -46,18 +43,28 @@
 
 .mac-controls {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .mac-btn {
   width: 12px;
   height: 12px;
+  min-width: 12px;
+  min-height: 12px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
   position: relative;
   transition: filter 80ms;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing: content-box;
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .mac-btn::before {
