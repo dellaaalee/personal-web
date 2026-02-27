@@ -3,12 +3,13 @@ import Dock from "./Dock";
 import Window from "./Window";
 import About from "./apps/About";
 import Experience from "./apps/Experience";
+import Projects from "./apps/Projects";
 import "./App.css";
 
 const WINDOW_CONTENT = {
   about:      { title: "About Me",   component: About },
   experience: { title: "Experience", component: Experience },
-  projects:   { title: "Projects",   component: null },
+  projects:   { title: "Projects",   component: Projects },
   community:  { title: "Community",  component: null },
   music:      { title: "Music",      component: null },
 };
