@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import Dock from "./Dock";
 import Window from "./Window";
+import MenuBar from "./MenuBar";
 import About from "./apps/About";
 import Experience from "./apps/Experience";
 import Projects from "./apps/Projects";
@@ -42,6 +43,7 @@ export default function App() {
 
   return (
     <>
+      <MenuBar />
       {windows.map((w) => {
         const config = WINDOW_CONTENT[w.id];
         if (!config) return null;
@@ -60,7 +62,6 @@ export default function App() {
           </Window>
         );
       })}
-
       <Dock onOpen={openWindow} openIds={new Set(windows.map((w) => w.id))} />
     </>
   );

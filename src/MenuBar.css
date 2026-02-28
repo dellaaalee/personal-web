@@ -1,0 +1,47 @@
+.menubar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: #F4F3F3;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 99999;
+  font-family: 'Inter', -apple-system, sans-serif;
+  user-select: none;
+}
+
+.menubar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menubar-apple {
+  font-size: 14px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.menubar-item {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.menubar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menubar-datetime {
+  font-size: 13px;
+  font-weight: 400;
+  color: #1a1a1a;
+}
