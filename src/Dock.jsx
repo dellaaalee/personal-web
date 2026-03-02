@@ -10,11 +10,11 @@ import music from "./assets/icons/notes.png";
 
 const items = [
   { id: "about",      label: "About me",   icon: about,    type: "notes"    },
-  { id: "experience", label: "Experience", icon: exp,      type: "notes"    },
+  { id: "experience", label: "Experience", icon: exp,      type: "folder"    },
   { id: "projects",   label: "Projects",   icon: projects, type: "folder"   },
   { id: "linkedin",   label: "LinkedIn",   icon: linkedin, type: "linkedin", url: "https://www.linkedin.com/in/della-lee/"},
   { id: "email",      label: "Email",      icon: gmail,    type: "gmail", url: "mailto:della.lee@berkeley.edu"    },
-  { id: "community",  label: "Community",  icon: music,    type: "folder"   },
+  { id: "community",  label: "Community",  icon: music,    type: "notes"   },
   { id: "music",      label: "Music",      icon: music,    type: "music"    },
 ];
 

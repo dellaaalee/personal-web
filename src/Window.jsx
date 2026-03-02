@@ -1,9 +1,9 @@
 import "./Window.css";
 import { useRef, useState, useEffect } from "react";
 
-export default function Window({ id, title, children, onClose, onFocus, zIndex, initialPosition }) {
-  const [pos, setPos] = useState(initialPosition || { x: 100, y: 80 });
-  const [size, setSize] = useState({ w: 640, h: 420 });
+export default function Window({ id, title, children, onClose, onFocus, zIndex, initialPos, initialSize, resizable = true }) {
+  const [pos, setPos] = useState(initialPos || { x: 100, y: 80 });
+  const [size, setSize] = useState(initialSize || { w: 640, h: 420 });
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [prevState, setPrevState] = useState(null);
@@ -14,7 +14,6 @@ export default function Window({ id, title, children, onClose, onFocus, zIndex, 
   const resizeStart = useRef({});
   const windowRef = useRef();
 
-  // Dragging
   const onTitleMouseDown = (e) => {
     if (isMaximized) return;
     dragging.current = true;
@@ -75,17 +74,16 @@ export default function Window({ id, title, children, onClose, onFocus, zIndex, 
   return (
     <div
       ref={windowRef}
-      className={`mac-window ${isMaximized ? "maximized" : ""}`}
+      className={"mac-window" + (isMaximized ? " maximized" : "")}
       style={{
         left: pos.x,
         top: pos.y,
         width: isMaximized ? "100vw" : size.w,
-        height: isMaximized ? `calc(100vh - 80px)` : size.h,
+        height: isMaximized ? "calc(100vh - 80px)" : size.h,
         zIndex,
       }}
       onMouseDown={() => onFocus(id)}
     >
-      {/* Title bar */}
       <div className="mac-titlebar" onMouseDown={onTitleMouseDown}>
         <div className="mac-controls">
           <button className="mac-btn close" onClick={() => onClose(id)} title="Close" />
@@ -95,11 +93,9 @@ export default function Window({ id, title, children, onClose, onFocus, zIndex, 
         <span className="mac-title">{title}</span>
       </div>
 
-      {/* Content */}
       <div className="mac-content">{children}</div>
 
-      {/* Resize handle */}
-      {!isMaximized && (
+      {!isMaximized && resizable && (
         <div className="mac-resize-handle" onMouseDown={onResizeMouseDown} />
       )}
     </div>

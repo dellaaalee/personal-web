@@ -6,13 +6,15 @@ import About from "./apps/About";
 import Experience from "./apps/Experience";
 import Projects from "./apps/Projects";
 import "./App.css";
+import Music from "./apps/Music";
+import Community from "./apps/Community";
 
 const WINDOW_CONTENT = {
   about:      { title: "About Me",   component: About },
   experience: { title: "Experience", component: Experience },
   projects:   { title: "Projects",   component: Projects },
-  community:  { title: "Community",  component: null },
-  music:      { title: "Music",      component: null },
+  community:  { title: "Community",  component: Community },
+  music:      { title: "Music",      component: Music, size: { w: 400, h: 600 }, resizable: false},
 };
 
 let zCounter = 100;
@@ -57,6 +59,8 @@ export default function App() {
             initialPos={w.pos}
             onClose={closeWindow}
             onFocus={focusWindow}
+            initialSize={config.size}
+            resizable={config.resizable !== false}
           >
             {Content ? <Content /> : <p style={{ padding: 20, color: "#999" }}>Coming soon.</p>}
           </Window>

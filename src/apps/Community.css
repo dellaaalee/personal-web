@@ -1,0 +1,63 @@
+.community-root {
+  padding: 24px 28px;
+  font-family: 'Inter', sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.community-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.community-pin {
+  font-size: 16px;
+}
+
+.community-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+}
+
+.community-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.community-body p {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #333;
+  margin: 0;
+}
+
+.community-body a {
+  color: #E6A817;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.community-body a:hover {
+  opacity: 0.75;
+}
+
+.community-date {
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+.community-highlight {
+    color: #E6A817;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
