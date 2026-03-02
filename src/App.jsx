@@ -31,29 +31,48 @@ const DESKTOP_ICONS = [
 ];
 
 const DESKTOP_POSITIONS = [
-  { x: 349, y: 483},
-  { x: 526, y: 464 },
-  { x: 676, y: 241 },
-  { x: 632, y: 620 },
-  { x: 791, y: 511 },
-  { x: 945, y: 377 },
-  { x: 1006, y: 613 },
+  { xPct: 0.24, yPct: 0.54 },
+  { xPct: 0.37, yPct: 0.52 },
+  { xPct: 0.47, yPct: 0.27 },
+  { xPct: 0.44, yPct: 0.69 },
+  { xPct: 0.55, yPct: 0.57 },
+  { xPct: 0.66, yPct: 0.42 },
+  { xPct: 0.70, yPct: 0.68 },
 ];
 
 let zCounter = 100;
 
-function DesktopIcon({ icon, initialPos, onOpen }) {
-  const [pos, setPos] = useState(initialPos);
-  const dragging = useRef(false);
-  const dragOffset = useRef({ x: 0, y: 0 });
-  const hasDragged = useRef(false);
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return isMobile;
+}
 
-  const iconType =
-    icon.id === "about" || icon.id === "experience" || icon.id === "community" ? "notes" :
-    icon.id === "projects" ? "folder" :
-    icon.id === "music" ? "music" :
-    icon.id === "linkedin" ? "linkedin" :
-    icon.id === "email" ? "gmail" : "notes";
+function DesktopIcon({ icon, initialPosPct, onOpen }) {
+  const toPixels = (pct) => ({
+    x: pct.xPct * window.innerWidth,
+    y: pct.yPct * window.innerHeight,
+  });
+
+  const [pos, setPos] = useState(() => toPixels(initialPosPct));
+  const dragging = useRef(false);
+  const dragOffset = useRef({});
+  const hasDragged = useRef(false);
+  const manuallyMoved = useRef(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (!manuallyMoved.current) {
+        setPos(toPixels(initialPosPct));
+      }
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     const onMouseMove = (e) => {
@@ -62,8 +81,12 @@ function DesktopIcon({ icon, initialPos, onOpen }) {
       const dy = e.clientY - dragOffset.current.startY;
       if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
         hasDragged.current = true;
+        manuallyMoved.current = true;
       }
-      setPos({ x: e.clientX - dragOffset.current.x, y: e.clientY - dragOffset.current.y });
+      setPos({
+        x: e.clientX - dragOffset.current.x,
+        y: e.clientY - dragOffset.current.y,
+      });
     };
     const onMouseUp = () => { dragging.current = false; };
     window.addEventListener("mousemove", onMouseMove);
@@ -91,6 +114,13 @@ function DesktopIcon({ icon, initialPos, onOpen }) {
     if (icon.id === "email") { window.open("mailto:dellahlee3@gmail.com", "_blank"); return; }
     onOpen(icon.id);
   };
+
+  const iconType =
+    icon.id === "about" || icon.id === "community" ? "notes" :
+    icon.id === "projects" || icon.id === "experience" ? "folder" :
+    icon.id === "music" ? "music" :
+    icon.id === "linkedin" ? "linkedin" :
+    icon.id === "email" ? "gmail" : "notes";
 
   return (
     <div
@@ -137,7 +167,7 @@ function DesktopIcons({ onOpen }) {
         <DesktopIcon
           key={icon.id}
           icon={icon}
-          initialPos={DESKTOP_POSITIONS[i]}
+          initialPosPct={DESKTOP_POSITIONS[i]}
           onOpen={onOpen}
         />
       ))}
@@ -145,8 +175,74 @@ function DesktopIcons({ onOpen }) {
   );
 }
 
+function MobileMenu({ onOpen }) {
+  const items = [
+    { id: "about",      label: "About Me"   },
+    { id: "experience", label: "Experience" },
+    { id: "projects",   label: "Projects"   },
+    { id: "community",  label: "Community"  },
+    { id: "music",      label: "Music"      },
+  ];
+
+  return (
+    <div style={{
+      position: "fixed",
+      top: 28,
+      left: 0,
+      right: 0,
+      bottom: 60,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 16,
+      padding: 24,
+    }}>
+      <p style={{ fontSize: 13, color: "#999", marginBottom: 8 }}>Della's Portfolio</p>
+      {items.map((item) => (
+        <button
+          key={item.id}
+          onClick={() => onOpen(item.id)}
+          style={{
+            width: "100%",
+            maxWidth: 320,
+            padding: "14px 20px",
+            background: "#fff",
+            borderRadius: 12,
+            fontSize: 15,
+            fontWeight: 500,
+            color: "#1a1a1a",
+            textAlign: "left",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            cursor: "pointer",
+            border: "none",
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          {item.label}
+        </button>
+      ))}
+      <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
+        <button
+          onClick={() => window.open("https://www.linkedin.com/in/della-lee/", "_blank")}
+          style={{ fontSize: 13, color: "#4AACE0", background: "none", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif" }}
+        >
+          LinkedIn
+        </button>
+        <button
+          onClick={() => window.open("mailto:dellahlee3@gmail.com", "_blank")}
+          style={{ fontSize: 13, color: "#4AACE0", background: "none", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif" }}
+        >
+          Email
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [windows, setWindows] = useState([]);
+  const isMobile = useIsMobile();
 
   const openWindow = useCallback((id) => {
     setWindows((prev) => {
@@ -172,27 +268,86 @@ export default function App() {
   return (
     <>
       <MenuBar />
-      <DesktopIcons onOpen={openWindow} />
-      {windows.map((w) => {
-        const config = WINDOW_CONTENT[w.id];
-        if (!config) return null;
-        const Content = config.component;
-        return (
-          <Window
-            key={w.id}
-            id={w.id}
-            title={config.title}
-            zIndex={w.zIndex}
-            initialPos={w.pos}
-            onClose={closeWindow}
-            onFocus={focusWindow}
-            initialSize={config.size}
-            resizable={config.resizable !== false}
-          >
-            {Content ? <Content /> : <p style={{ padding: 20, color: "#999" }}>Coming soon.</p>}
-          </Window>
-        );
-      })}
+      {isMobile ? (
+        <>
+          <MobileMenu onOpen={openWindow} />
+          {windows.length > 0 && (() => {
+            const w = windows[windows.length - 1];
+            const config = WINDOW_CONTENT[w.id];
+            if (!config) return null;
+            const Content = config.component;
+            return (
+              <div style={{
+                position: "fixed",
+                top: 28,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: "#fff",
+                zIndex: 9000,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+              }}>
+                <div style={{
+                  height: 40,
+                  background: "#f5f5f5",
+                  borderBottom: "1px solid rgba(0,0,0,0.08)",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "0 12px",
+                  gap: 12,
+                  flexShrink: 0,
+                }}>
+                  <button
+                    onClick={() => closeWindow(w.id)}
+                    style={{
+                      fontSize: 13,
+                      color: "#5BBDDD",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    ← Back
+                  </button>
+                  <span style={{ fontSize: 13, fontWeight: 500, color: "#3a3a3a" }}>
+                    {config.title}
+                  </span>
+                </div>
+                <div style={{ flex: 1, overflow: "auto" }}>
+                  {Content ? <Content /> : <p style={{ padding: 20, color: "#999" }}>Coming soon.</p>}
+                </div>
+              </div>
+            );
+          })()}
+        </>
+      ) : (
+        <>
+          <DesktopIcons onOpen={openWindow} />
+          {windows.map((w) => {
+            const config = WINDOW_CONTENT[w.id];
+            if (!config) return null;
+            const Content = config.component;
+            return (
+              <Window
+                key={w.id}
+                id={w.id}
+                title={config.title}
+                zIndex={w.zIndex}
+                initialPos={w.pos}
+                onClose={closeWindow}
+                onFocus={focusWindow}
+                initialSize={config.size}
+                resizable={config.resizable !== false}
+              >
+                {Content ? <Content /> : <p style={{ padding: 20, color: "#999" }}>Coming soon.</p>}
+              </Window>
+            );
+          })}
+        </>
+      )}
       <Dock onOpen={openWindow} openIds={new Set(windows.map((w) => w.id))} />
     </>
   );

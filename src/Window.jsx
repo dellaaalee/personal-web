@@ -1,9 +1,9 @@
 import "./Window.css";
 import { useRef, useState, useEffect } from "react";
 
-export default function Window({ id, title, children, onClose, onFocus, zIndex, initialPos, initialSize, resizable = true }) {
-  const [pos, setPos] = useState(initialPos || { x: 100, y: 80 });
-  const [size, setSize] = useState(initialSize || { w: 640, h: 420 });
+export default function Window({ id, title, children, onClose, onFocus, zIndex, initialPos, initialSize, resizable = true, isMobile = false }) {
+  const [pos, setPos] = useState(isMobile ? { x: 0, y: 0 } : (initialPos || { x: 100, y: 80 }));
+  const [size, setSize] = useState(isMobile ? { w: window.innerWidth, h: window.innerHeight - 60 } : (initialSize || { w: 640, h: 420 }));
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [prevState, setPrevState] = useState(null);
@@ -76,11 +76,12 @@ export default function Window({ id, title, children, onClose, onFocus, zIndex, 
       ref={windowRef}
       className={"mac-window" + (isMaximized ? " maximized" : "")}
       style={{
-        left: pos.x,
-        top: pos.y,
-        width: isMaximized ? "100vw" : size.w,
-        height: isMaximized ? "calc(100vh - 80px)" : size.h,
+        left: isMobile ? 0 : pos.x,
+        top: isMobile ? 28 : pos.y,
+        width: isMobile ? "100vw" : (isMaximized ? "100vw" : size.w),
+        height: isMobile ? "calc(100vh - 88px)" : (isMaximized ? "calc(100vh - 80px)" : size.h),
         zIndex,
+        borderRadius: isMobile ? 0 : 12,
       }}
       onMouseDown={() => onFocus(id)}
     >
